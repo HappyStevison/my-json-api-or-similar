@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindehjemmeside for [Hundens Navn]</title>
+
+  <style>
+    :root {
+      --primary-color: #333;
+      --secondary-color: #666;
+      --light-color: #f9f9f9;
+      --accent-gold: #c9a961;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      color: var(--primary-color);
+      background: var(--light-color);
+    }
+
+    /* ---------- BOTTOM CORNER MENU ---------- */
+    header {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    header:hover {
+      transform: scale(1.1);
+    }
+    header h1,
+    header p {
+      display: none;
+    }
+    header nav {
+      display: none;
+      position: absolute;
+      bottom: 3.5rem;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    header:hover nav {
+      display: block;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    header nav a {
+      color: var(--primary-color);
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    header nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      height: 100vh;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)),
+                        url('j2.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* ---------- MEMORIAL PLAQUE ---------- */
+    .hero-content {
+      --plaque-bg: rgba(255, 252, 247, 0.88);
+      --plaque-glow: var(--accent-gold);
+      --plaque-text: #2f2f2f;
+
+      position: relative;
+      max-width: 420px;
+      padding: 2.8rem 3.2rem 3rem;
+      background: var(--plaque-bg);
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+      border: 1px solid var(--plaque-glow);
+      border-radius: 1.2rem;
+      box-shadow:
+        0 0 0 1px var(--plaque-glow),
+        0 0 24px rgba(201, 169, 97, 0.18),
+        0 8px 32px rgba(0, 0, 0, 0.1);
+      color: var(--plaque-text);
+      text-align: center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-content::before {
+      content: "🐾";
+      position: absolute;
+      top: -1.1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      background: var(--plaque-bg);
+      padding: 0 0.6rem;
+      line-height: 1;
+    }
+
+    .hero-content h2 {
+      font-size: clamp(1.9rem, 3vw + 0.5rem, 2.8rem);
+      margin: 0.3rem 0 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 2vw + 0.2rem, 1.35rem);
+      margin: 0;
+      font-style: italic;
+      opacity: 0.85;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+
+    /* ---------- REST OF PAGE ---------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Bottom-right paw menu -->
+  <header>
+    <span style="font-size:1.4rem;">🐾</span>
+    <nav>
+      <ul>
+        <li><a href="#about">Om [Hundens Navn]</a></li>
+        <li><a href="#gallery">Billeder</a></li>
+        <li><a href="#memories">Minder</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero with memorial plaque -->
+  <section class="hero" role="img" aria-label="[Hundens Navn] i smukt lys">
+    <div class="hero-content">
+      <h2>Tak for alle de gode år</h2>
+      <p>Et kærligt farvel til en trofast ven</p>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <div class="container">
+    <section id="about">
+      <h2>Om [Hundens Navn]</h2>
+      <p>Her kan du skrive en smuk beskrivelse af [Hundens Navn]s liv og personlighed …</p>
+    </section>
+
+    <section id="gallery">
+      <h2>Billeder</h2>
+      <p>En samling af de smukkeste øjeblikke med [Hundens Navn].</p>
+      <!-- insert gallery markup -->
+    </section>
+
+    <section id="memories">
+      <h2>Kære minder</h2>
+      <!-- insert memory cards -->
+    </section>
+
+    <section id="contact">
+      <h2>Del dine minder</h2>
+      <p>Hvis du har minder eller billeder af [Hundens Navn] du vil dele …</p>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Mindehjemmeside for [Hundens Navn]. Alle rettigheder forbeholdes.</p>
+  </footer>
+</body>
+</html>
