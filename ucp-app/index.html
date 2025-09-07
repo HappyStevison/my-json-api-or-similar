@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UCP Virtual Witness</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    .acknowledgment {
+      text-align: center;
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .step {
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #endSession {
+      background-color: #dc3545;
+    }
+    #endSession:hover {
+      background-color: #c82333;
+    }
+    .instructions {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .instructions h3 {
+      margin-top: 0;
+    }
+    .response {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>UCP Virtual Witness</h1>
+    <div class="acknowledgment">
+      Based on the teachings of <strong>Konchok Penday</strong>
+    </div>
+    <button id="instructionsButton" onclick="toggleInstructions()">Instructions</button>
+    <div id="instructions" class="instructions">
+      <h3>How to Practice UCP</h3>
+      <p>
+        UCP (Universal Conscious Practice) is a powerful method for enhancing self-awareness and personal growth. Follow these steps:
+      </p>
+      <ol>
+        <li><strong>WHERE ARE YOU NOW?</strong> - Describe your current situation in detail.</li>
+        <li><strong>WHERE MIGHT YOU BE?</strong> - Imagine a possible future scenario.</li>
+        <li><strong>COMPARE THAT TO NOW.</strong> - Compare the future scenario to your present.</li>
+        <li><strong>WHERE HAVE YOU BEEN?</strong> - Reflect on a past experience.</li>
+        <li><strong>COMPARE THAT TO NOW.</strong> - Compare the past experience to your present.</li>
+      </ol>
+      <p>Repeat the cycle until you feel complete. End the session when ready.</p>
+      <h3>Benefits of UCP</h3>
+      <ul>
+        <li>Enhances self-awareness and clarity.</li>
+        <li>Helps resolve past traumas and emotional blocks.</li>
+        <li>Encourages creative thinking about the future.</li>
+        <li>Promotes a deeper understanding of your present reality.</li>
+      </ul>
+    </div>
+    <div id="app">
+      <div id="steps"></div>
+      <button id="nextStep" onclick="nextStep()">Next Step</button>
+      <button id="endSession" onclick="endSession()" style="display:none;">End Session</button>
+    </div>
+  </div>
+
+  <script>
+    let currentCycle = 0; // 0: WHERE ARE YOU NOW?, 1: Future/Past cycle
+    const responses = [];
+
+    const stepQuestions = [
+      "WHERE ARE YOU NOW?",
+      "WHERE MIGHT YOU BE?",
+      "COMPARE THAT TO NOW.",
+      "WHERE HAVE YOU BEEN?",
+      "COMPARE THAT TO NOW."
+    ];
+
+    function getStepQuestion(cycle) {
+      if (cycle === 0) return stepQuestions[0]; // Only ask "WHERE ARE YOU NOW?" once
+      const cycleQuestions = [
+        stepQuestions[1], // WHERE MIGHT YOU BE?
+        stepQuestions[2], // COMPARE THAT TO NOW.
+        stepQuestions[3], // WHERE HAVE YOU BEEN?
+        stepQuestions[4]  // COMPARE THAT TO NOW.
+      ];
+      return cycleQuestions[(cycle - 1) % 4];
+    }
+
+    function renderStep() {
+      const stepsContainer = document.getElementById("steps");
+      const question = getStepQuestion(currentCycle);
+      stepsContainer.innerHTML = `
+        <div class="step">
+          <label>${question}:</label>
+          <textarea id="response" placeholder="Describe in detail..."></textarea>
+          ${currentCycle > 0 ? `<div class="response"><strong>Previous Response:</strong> ${responses[responses.length - 1] || "N/A"}</div>` : ""}
+        </div>
+      `;
+      if (currentCycle > 0) {
+        document.getElementById("endSession").style.display = "block";
+      }
+    }
+
+    function nextStep() {
+      const response = document.getElementById("response").value.trim();
+      if (response === "") {
+        alert("Please provide a response before moving to the next step.");
+        return;
+      }
+      responses.push(response);
+      currentCycle++;
+      renderStep();
+    }
+
+    function endSession() {
+      const stepsContainer = document.getElementById("steps");
+      const summaryLabels = [];
+      for (let i = 0; i < responses.length; i++) {
+        if (i === 0) {
+          summaryLabels.push("Now");
+        } else {
+          const label = ["Future", "Now", "Past", "Now"][(i - 1) % 4];
+          summaryLabels.push(label);
+        }
+      }
+      stepsContainer.innerHTML = `
+        <h2>Session Ended</h2>
+        <p>Thank you for practicing UCP! Here’s a summary of your session:</p>
+        <div class="response">${summaryLabels.map((label, index) => `<strong>${label}:</strong> ${responses[index]}`).join("<br><br>")}</div>
+        <p>Best wishes on your journey of awareness!</p>
+      `;
+      document.getElementById("nextStep").style.display = "none";
+      document.getElementById("endSession").style.display = "none";
+    }
+
+    function toggleInstructions() {
+      const instructions = document.getElementById("instructions");
+      instructions.style.display = instructions.style.display === "none" ? "block" : "none";
+    }
+
+    // Initialize the first step
+    renderStep();
+  </script>
+</body>
+</html>
